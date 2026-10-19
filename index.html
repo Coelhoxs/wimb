@@ -2440,4 +2440,22 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
   @keyframes wh-grin{0%,62%,100%{transform:scale(1)}20%,40%{transform:scale(1.12,1.18)}}
   @media(prefers-reduced-motion:reduce){.wimble-happy .wh-body,.wimble-happy .wh-brows,.wimble-happy .wh-eye,.wimble-happy .wh-mouth{animation:none}}
 </style>
+<script>
+  /* Re-rendering the same screen (picking an answer, a chip, a tab) must not replay the
+     page's entrance animation. Keep the page-level animations at their current time. */
+  (function(){
+    const renderBeforeSteady=render;
+    let lastKey=null;
+    const pageAnims=()=>{const pg=document.querySelector('#root > *');return pg?pg.getAnimations():[]};
+    render=function(){
+      const key=S.screen+'|'+(S.on||0);
+      const saved={};
+      if(key===lastKey)pageAnims().forEach(a=>{saved[a.animationName]=a.currentTime});
+      const out=renderBeforeSteady.apply(this,arguments);
+      if(key===lastKey)pageAnims().forEach(a=>{if(a.animationName in saved&&saved[a.animationName]!=null)a.currentTime=saved[a.animationName];else{try{a.finish()}catch(e){}}});
+      lastKey=key;
+      return out;
+    };
+  })();
+</script>
 </body></html>
