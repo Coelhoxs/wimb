@@ -2412,5 +2412,9 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
 <style>
   /* Button text uses regular DM Sans (no bold) for primary, secondary and text buttons. */
   html body .btn.alt,html body .flow-secondary,html body .flow-link{font-weight:400!important}
+  /* Button labels get a small letter spacing. */
+  html body .btn,html body .flow-primary,html body .flow-secondary,html body .flow-link,
+  html body .camera-fallback-button,html body .camera-capture,html body .camera-actions .camera-save,
+  html body #root .cal-activity .activity-action,html body .memory-detail .memory-reset-card .activity-action{letter-spacing:.06em!important}
 </style>
 </body></html>
