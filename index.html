@@ -2273,5 +2273,53 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
     box-shadow:none!important;
   }
 </style>
-</body></html>
 
+<style>
+  /* Home v2 (Léia's redesign): Find my Break first, mood check-in on Home,
+     readable weekly insight, Quick Activities ordered by time. */
+  .home-v2 .home-insight-orbits{display:none}
+  .home-v2 .daily{margin-bottom:26px}
+  .home-v2 .find-hero{position:relative;z-index:3;padding:22px 20px 20px;border-radius:24px}
+  .home-v2 .find-hero h1{margin:0;font-family:"Lora",Georgia,serif;font-weight:600;font-size:28px;line-height:32px;letter-spacing:.4px;color:var(--wimb-t50);text-align:left}
+  .home-v2 .find-hero .copy{margin:8px 0 14px!important;font-size:14px;color:var(--wimb-t100);text-align:left}
+  .home-v2 .mood-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .home-v2 .mood-chip{font:500 13px/1 "DM Sans",Avenir,"Segoe UI",sans-serif;color:var(--wimb-t50);padding:10px 14px;border-radius:100px;border:1px solid rgba(183,235,246,.32);background:rgba(13,32,36,.38);cursor:pointer}
+  .home-v2 .mood-chip.on{color:var(--wimb-t950);border-color:transparent;background:linear-gradient(105deg,var(--wimb-t200),var(--wimb-p200))}
+  .home-v2 .mood-chip:focus-visible{outline:2px solid var(--wimb-t200);outline-offset:2px}
+  .home-v2 .find-hero .start{width:100%;margin:0!important}
+  .home-v2 .week-card{position:relative;z-index:3;display:flex;align-items:center;gap:16px;margin:18px 0 26px;padding:14px 18px;border-radius:20px;cursor:pointer;text-align:left;border:1px solid rgba(183,235,246,.22);background:rgba(13,32,36,.46);color:inherit;width:100%}
+  .home-v2 .week-card img{width:52px;height:52px;flex:none}
+  .home-v2 .week-card .ey{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--wimb-o200);margin-bottom:4px}
+  .home-v2 .week-card p{margin:0;font-size:14px;line-height:1.4;color:var(--wimb-t50)}
+  .home-v2 .week-card b{font-family:"Lora",Georgia,serif;font-weight:600}
+</style>
+<script>
+  /* Home v2 render: wraps the existing render, so other screens are untouched. */
+  (function(){
+    const renderBeforeHomeV2=render;
+    const moods=[['Busy mind','My mind feels busy'],['Low energy','I feel low on energy'],['Need to move','I want to move my body']];
+    const quick=[['breathe','Breathe','5 min'],['exercise','Exercise','10 min'],['tea','Tea','15 min']];
+    render=function(){
+      if(S.screen!=='home')return renderBeforeHomeV2();
+      $('#root').innerHTML=`<section class="page home-ref home-v2">
+        <div class="daily"><h1>Hello, Lucy.</h1><p>Take a moment for yourself today.</p></div>
+        <div class="find-hero glass">
+          <h1>Find my Break</h1>
+          <p class="copy">How do you feel right now?</p>
+          <div class="mood-chips" role="group" aria-label="How do you feel right now?">${moods.map(([l,v])=>`<button class="mood-chip ${S.mood===v?'on':''}" aria-pressed="${S.mood===v}" data-mood="${v}">${l}</button>`).join('')}</div>
+          <button class="btn start">Start</button>
+        </div>
+        <button class="week-card" aria-label="Open your Break Journal"><img src="assets/mascots/wimble-smile.svg" alt=""><span><span class="ey">This week</span><p><b>3 breaks</b> taken.<br>Tea helped you most.</p></span></button>
+        <div class="quick-title">QUICK ACTIVITIES</div>
+        <div class="grid3 quick-grid">${quick.map(([k,n,d])=>`<button class="quick glass" data-kind="${k}"><img class="quick-icon icon-${k}" alt="" src="assets/quick-reset/${k}.svg"><b>${n}</b><small>${d}</small></button>`).join('')}</div>
+      </section>${nav('home')}`;
+      const root=document.querySelector('.home-v2');
+      root.querySelectorAll('.mood-chip').forEach(b=>b.onclick=()=>{S.mood=S.mood===b.dataset.mood?'':b.dataset.mood;render()});
+      root.querySelector('.start').onclick=()=>{S.quickReset='';go('time')};
+      root.querySelector('.week-card').onclick=()=>go('journal');
+      root.querySelectorAll('.quick').forEach(b=>b.onclick=()=>openQuickReset(b.dataset.kind));
+    };
+    render();
+  })();
+</script>
+</body></html>
