@@ -97,8 +97,8 @@ Complete tokens for body text, labels, metadata, buttons, and navigation are not
 
 ### Color usage rules
 
-- All primary action buttons use the approved darker orange Liquid Glass treatment built from Orange 300 (`#F89F8F`), Orange 400 (`#F6795A`), and Orange 500 (`#E35C2E`). This treatment uses only orange shades with a controlled white glass highlight; do not introduce purple into primary action buttons.
-- Compact action controls inside cards, including **View Activity**, use the same darker orange Liquid Glass treatment as primary action buttons.
+- All primary action buttons use the Figma Component Library button "Property 1=Variant2" (node 2196:369): a flat Purple `#533F66` fill, a 1px linear gradient border from Orange 300 (`#F89F8F`) at the top to Turquoise 300 (`#66BAC9`) at the bottom, 26px radius, and white DM Sans ExtraBold 15px text.
+- Compact action controls inside cards, including **View Activity**, use the same purple button treatment as primary action buttons.
 - The Navigation Bar keeps its existing approved colors and active-indicator treatment; the Orange 300 button update does not apply to it.
 - Dark Turquoise is currently used for the main atmospheric background.
 - Purple and Turquoise are used for selected surfaces and atmospheric accents.
@@ -124,7 +124,7 @@ Connected screens must use consistent alignment, spacing, safe-area treatment, s
 - Dark turquoise atmospheric backgrounds
 - Controlled purple and orange accent lighting
 - Liquid-glass surfaces
-- Orange liquid-glass primary actions
+- Purple primary actions with a coral-to-turquoise border
 - Turquoise-to-purple selected surfaces
 - Organic background shapes and calm motion
 - Rounded image and content surfaces
