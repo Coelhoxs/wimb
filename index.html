@@ -2290,6 +2290,21 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
   .home-v2 .mood-chip.on{color:var(--wimb-t950);border-color:transparent;background:linear-gradient(105deg,var(--wimb-t200),var(--wimb-p200))}
   .home-v2 .mood-chip:focus-visible{outline:2px solid var(--wimb-t200);outline-offset:2px}
   .home-v2 .find-hero .start{width:100%;margin:4px 0 0!important}
+  /* Start button: Figma Component Library "Property 1=Variant2" (node 2196:369). */
+  .home-v2 .find-hero .start{
+    min-height:48px;border-radius:26px!important;
+    background:
+      radial-gradient(circle at 15% 15%,rgba(248,159,143,.26),rgba(248,159,143,0) 55%),
+      radial-gradient(ellipse at 36% 43%,rgba(255,255,255,.10),rgba(255,255,255,0) 39%),
+      #533F66!important;
+    border:1px solid #F89F8F!important;
+    box-shadow:inset 1px 1px 0 1px rgba(255,255,255,.55)!important;
+    color:#fff!important;font-family:"DM Sans",Avenir,"Segoe UI",sans-serif!important;font-weight:800!important;font-size:15px!important;
+    text-shadow:0 1px 0 rgba(255,255,255,.28)!important;
+  }
+  .home-v2 .find-hero .start:after{display:none}
+  .home-v2 .find-hero .start:active{filter:brightness(1.08)}
+  .home-v2 .find-hero .start:focus-visible{outline:2px solid #F89F8F;outline-offset:3px}
   /* The weekly message takes the free space and centres itself in it. */
   .home-v2 .week-message{flex:1 1 auto!important;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;position:relative;z-index:3}
   .home-v2 .week-message img{width:88px;height:auto;flex:none}
