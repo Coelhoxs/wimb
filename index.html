@@ -2278,20 +2278,26 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
   /* Home v2 (Léia's redesign): Find my Break first, mood check-in on Home,
      readable weekly insight, Quick Activities ordered by time. */
   .home-v2 .home-insight-orbits{display:none}
-  .home-v2 .daily{margin-bottom:26px}
-  .home-v2 .find-hero{position:relative;z-index:3;padding:22px 20px 20px;border-radius:24px}
+  /* Auto layout: one vertical stack that fills the screen above the menu. */
+  .home-v2{display:flex!important;flex-direction:column;gap:24px;box-sizing:border-box;height:100%;padding:70px 22px 96px!important;overflow:hidden}
+  .home-v2>*{margin:0!important;flex:none}
+  .home-v2 .daily h1{margin:0}
+  .home-v2 .find-hero{position:relative;z-index:3;display:flex;flex-direction:column;gap:14px;padding:22px 20px 20px;border-radius:24px}
   .home-v2 .find-hero h1{margin:0;font-family:"Lora",Georgia,serif;font-weight:600;font-size:28px;line-height:32px;letter-spacing:.4px;color:var(--wimb-t50);text-align:left}
-  .home-v2 .find-hero .copy{margin:8px 0 14px!important;font-size:14px;color:var(--wimb-t100);text-align:left}
-  .home-v2 .mood-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .home-v2 .find-hero .copy{margin:-6px 0 0!important;font-size:14px;color:var(--wimb-t100);text-align:left}
+  .home-v2 .mood-chips{display:flex;flex-wrap:wrap;gap:8px}
   .home-v2 .mood-chip{font:500 13px/1 "DM Sans",Avenir,"Segoe UI",sans-serif;color:var(--wimb-t50);padding:10px 14px;border-radius:100px;border:1px solid rgba(183,235,246,.32);background:rgba(13,32,36,.38);cursor:pointer}
   .home-v2 .mood-chip.on{color:var(--wimb-t950);border-color:transparent;background:linear-gradient(105deg,var(--wimb-t200),var(--wimb-p200))}
   .home-v2 .mood-chip:focus-visible{outline:2px solid var(--wimb-t200);outline-offset:2px}
-  .home-v2 .find-hero .start{width:100%;margin:0!important}
-  .home-v2 .week-card{position:relative;z-index:3;display:flex;align-items:center;gap:16px;margin:18px 0 26px;padding:14px 18px;border-radius:20px;cursor:pointer;text-align:left;border:1px solid rgba(183,235,246,.22);background:rgba(13,32,36,.46);color:inherit;width:100%}
-  .home-v2 .week-card img{width:52px;height:52px;flex:none}
-  .home-v2 .week-card .ey{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--wimb-o200);margin-bottom:4px}
-  .home-v2 .week-card p{margin:0;font-size:14px;line-height:1.4;color:var(--wimb-t50)}
-  .home-v2 .week-card b{font-family:"Lora",Georgia,serif;font-weight:600}
+  .home-v2 .find-hero .start{width:100%;margin:4px 0 0!important}
+  /* The weekly message takes the free space and centres itself in it. */
+  .home-v2 .week-message{flex:1 1 auto!important;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;position:relative;z-index:3}
+  .home-v2 .week-message img{width:88px;height:auto;flex:none}
+  .home-v2 .week-message .ey{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--wimb-o200)}
+  .home-v2 .week-message p{margin:0;font-size:15px;line-height:1.45;color:var(--wimb-t50)}
+  .home-v2 .week-message b{font-family:"Lora",Georgia,serif;font-weight:600}
+  .home-v2 .quick-block{display:flex;flex-direction:column;gap:12px;position:relative;z-index:3}
+  .home-v2 .quick-block .quick-grid{margin:0!important}
 </style>
 <script>
   /* Home v2 render: wraps the existing render, so other screens are untouched. */
@@ -2309,17 +2315,54 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
           <div class="mood-chips" role="group" aria-label="How do you feel right now?">${moods.map(([l,v])=>`<button class="mood-chip ${S.mood===v?'on':''}" aria-pressed="${S.mood===v}" data-mood="${v}">${l}</button>`).join('')}</div>
           <button class="btn start">Start</button>
         </div>
-        <button class="week-card" aria-label="Open your Break Journal"><img src="assets/mascots/wimble-smile.svg" alt=""><span><span class="ey">This week</span><p><b>3 breaks</b> taken.<br>Tea helped you most.</p></span></button>
-        <div class="quick-title">QUICK ACTIVITIES</div>
-        <div class="grid3 quick-grid">${quick.map(([k,n,d])=>`<button class="quick glass" data-kind="${k}"><img class="quick-icon icon-${k}" alt="" src="assets/quick-reset/${k}.svg"><b>${n}</b><small>${d}</small></button>`).join('')}</div>
+        <div class="week-message"><img src="assets/mascots/wimble-smile.svg" alt="Wimble"><span class="ey">This week</span><p><b>3 breaks</b> taken.<br>Tea helped you most.</p></div>
+        <div class="quick-block"><div class="quick-title">QUICK ACTIVITIES</div>
+        <div class="grid3 quick-grid">${quick.map(([k,n,d])=>`<button class="quick glass" data-kind="${k}"><img class="quick-icon icon-${k}" alt="" src="assets/quick-reset/${k}.svg"><b>${n}</b><small>${d}</small></button>`).join('')}</div></div>
       </section>${nav('home')}`;
       const root=document.querySelector('.home-v2');
       root.querySelectorAll('.mood-chip').forEach(b=>b.onclick=()=>{S.mood=S.mood===b.dataset.mood?'':b.dataset.mood;render()});
       root.querySelector('.start').onclick=()=>{S.quickReset='';go('time')};
-      root.querySelector('.week-card').onclick=()=>go('journal');
       root.querySelectorAll('.quick').forEach(b=>b.onclick=()=>openQuickReset(b.dataset.kind));
     };
     render();
+  })();
+</script>
+
+<script>
+  /* Menu motion: every new menu starts where the last one was, then slides to the new tab. */
+  (function(){
+    const navBefore=nav;
+    nav=function(on){
+      const start=typeof window.wimbNavPendingX==='number'?window.wimbNavPendingX:window.wimbNavLastX;
+      const html=navBefore(on);
+      return typeof start==='number'?html.replace('<nav class="nav glass"',`<nav class="nav glass" data-start-x="${start}" style="--nav-active-x:${start}px"`):html;
+    };
+    wimbSyncNav=function(navEl){
+      if(!navEl||navEl.dataset.motionStarted)return;
+      const active=(S.activeTab&&navEl.querySelector(`button[data-nav-tab="${S.activeTab}"]`))||navEl.querySelector('button.on')||navEl.querySelector('button[data-nav-tab]');
+      if(!active)return;
+      const navBox=navEl.getBoundingClientRect(),b=active.getBoundingClientRect();
+      if(!navBox.width)return;
+      const targetX=b.left-navBox.left+b.width/2;
+      navEl.dataset.motionStarted='true';
+      window.wimbNavPendingX=null;
+      window.wimbNavLastX=targetX;
+      const startX=parseFloat(navEl.dataset.startX);
+      const parts=navEl.querySelectorAll('.nav-active-indicator,.nav-active-wave');
+      if(isNaN(startX)||Math.abs(startX-targetX)<1||matchMedia('(prefers-reduced-motion: reduce)').matches){
+        parts.forEach(el=>el.style.transition='none');
+        navEl.style.setProperty('--nav-active-x',`${targetX}px`);
+        requestAnimationFrame(()=>parts.forEach(el=>el.style.transition=''));
+        return;
+      }
+      navEl.style.setProperty('--nav-indicator-stretch','1.15');
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        navEl.style.setProperty('--nav-active-x',`${targetX}px`);
+        navEl.style.setProperty('--nav-indicator-stretch','1.035');
+        active.classList.add('nav-arriving');
+        setTimeout(()=>navEl.style.setProperty('--nav-indicator-stretch','1'),420);
+      }));
+    };
   })();
 </script>
 </body></html>
