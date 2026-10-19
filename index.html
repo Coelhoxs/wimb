@@ -2297,7 +2297,7 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
     background:linear-gradient(#533F66,#533F66) padding-box,linear-gradient(180deg,#F89F8F,#66BAC9) border-box!important;
     border:1px solid transparent!important;
     box-shadow:none!important;
-    color:#fff!important;font-family:"DM Sans",Avenir,"Segoe UI",sans-serif!important;font-weight:800!important;font-size:15px!important;
+    color:#fff!important;font-family:"DM Sans",Avenir,"Segoe UI",sans-serif!important;font-weight:400!important;font-size:15px!important;
     text-shadow:0 1px 0 rgba(255,255,255,.28)!important;
   }
   .home-v2 .find-hero .start:after{display:none}
@@ -2396,6 +2396,7 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
     border:1px solid transparent!important;
     box-shadow:none!important;
     color:#fff!important;
+    font-weight:400!important;
     text-shadow:0 1px 0 rgba(255,255,255,.28)!important;
   }
   html body .btn:not(.alt):after,
@@ -2407,5 +2408,9 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
   html body .camera-actions .camera-save:after,
   html body #root .cal-activity .activity-action:after,
   html body .memory-detail .memory-reset-card .activity-action:after{display:none!important}
+</style>
+<style>
+  /* Button text uses regular DM Sans (no bold) for primary, secondary and text buttons. */
+  html body .btn.alt,html body .flow-secondary,html body .flow-link{font-weight:400!important}
 </style>
 </body></html>

@@ -97,7 +97,7 @@ Complete tokens for body text, labels, metadata, buttons, and navigation are not
 
 ### Color usage rules
 
-- All primary action buttons use the Figma Component Library button "Property 1=Variant2" (node 2196:369): a flat Purple `#533F66` fill, a 1px linear gradient border from Orange 300 (`#F89F8F`) at the top to Turquoise 300 (`#66BAC9`) at the bottom, 26px radius, and white DM Sans ExtraBold 15px text.
+- All primary action buttons use the Figma Component Library button "Property 1=Variant2" (node 2196:369): a flat Purple `#533F66` fill, a 1px linear gradient border from Orange 300 (`#F89F8F`) at the top to Turquoise 300 (`#66BAC9`) at the bottom, 26px radius, and white DM Sans Regular (400) 15px text. Secondary and text buttons also use regular weight; button labels are never bold.
 - Compact action controls inside cards, including **View Activity**, use the same purple button treatment as primary action buttons.
 - The Navigation Bar keeps its existing approved colors and active-indicator treatment; the Orange 300 button update does not apply to it.
 - Dark Turquoise is currently used for the main atmospheric background.
