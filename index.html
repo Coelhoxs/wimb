@@ -2303,7 +2303,7 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
   /* Home v2 render: wraps the existing render, so other screens are untouched. */
   (function(){
     const renderBeforeHomeV2=render;
-    const moods=[['Busy mind','My mind feels busy'],['Low energy','I feel low on energy'],['Need to move','I want to move my body']];
+    const moods=[['Busy mind','My mind feels busy','Find a break for my busy mind'],['Low energy','I feel low on energy','Find a break for my low energy'],['Need to move','I want to move my body','Find a break to get moving']];
     const quick=[['breathe','Breathe','5 min'],['exercise','Exercise','10 min'],['tea','Tea','15 min']];
     render=function(){
       if(S.screen!=='home')return renderBeforeHomeV2();
@@ -2313,7 +2313,7 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
           <h1>Find my Break</h1>
           <p class="copy">How do you feel right now?</p>
           <div class="mood-chips" role="group" aria-label="How do you feel right now?">${moods.map(([l,v])=>`<button class="mood-chip ${S.mood===v?'on':''}" aria-pressed="${S.mood===v}" data-mood="${v}">${l}</button>`).join('')}</div>
-          <button class="btn start">Start</button>
+          <button class="btn start">${(moods.find(m=>m[1]===S.mood)||[,,"Let's begin"])[2]}</button>
         </div>
         <div class="week-message"><img src="assets/mascots/wimble-smile.svg" alt="Wimble"><span class="ey">This week</span><p><b>3 breaks</b> taken.<br>Tea helped you most.</p></div>
         <div class="quick-block"><div class="quick-title">QUICK ACTIVITIES</div>
