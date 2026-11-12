@@ -2463,4 +2463,28 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
   /* Profile avatar: local photo of Lucy Mary (from the team's profile mockup), so it always loads. */
   html body .profile-avatar{background:url('assets/avatar/lucy-mary.jpg') center/cover no-repeat!important}
 </style>
+<style>
+  /* Fit to any screen: keep the 402 x 874 design and scale it to the visible area,
+     so every screen is complete on every phone (including in-app browsers) and on short laptops. */
+  html,body{height:100%}
+  body{min-height:0!important;height:100dvh!important;overflow:hidden!important;display:grid!important;place-items:center!important;margin:0}
+  .app{position:fixed!important;left:50%!important;top:50%!important;margin:0!important;width:402px!important;height:874px!important;max-height:none!important;transform:translate(-50%,-50%) scale(var(--fit,1));transform-origin:center center}
+  @media (max-width:500px){
+    body{background:linear-gradient(145deg,#1f4149,#123036 48%,#1d2f3a)!important}
+    .app{box-shadow:none!important}
+  }
+</style>
+<script>
+  (function(){
+    function fit(){
+      var vv=window.visualViewport, w=vv?vv.width:innerWidth, h=vv?vv.height:innerHeight;
+      var phone=w<=500, pad=phone?0:32;
+      var s=Math.min((w-pad)/402,(h-pad)/874);
+      if(!phone)s=Math.min(s,1);
+      document.documentElement.style.setProperty('--fit',s.toFixed(4));
+    }
+    fit();addEventListener('resize',fit);addEventListener('orientationchange',fit);
+    if(window.visualViewport)visualViewport.addEventListener('resize',fit);
+  })();
+</script>
 </body></html>
