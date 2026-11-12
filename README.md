@@ -4,6 +4,8 @@
 UX/UI capstone project · neue fische Bootcamp · 2026
 by Dženeta Bratić, Léia Coelho and Maria Brand
 
+**▶ Try the live prototype: [coelhoxs.github.io/wimb](https://coelhoxs.github.io/wimb/)** (best on a phone, or in your browser’s phone view)
+
 ![WIMB app screens: Home, Your Break is ready, Break Journal](WIMB-presentation-mockup.png)
 
 ---
@@ -90,6 +92,9 @@ Full specification: [`DESIGN.md`](DESIGN.md)
 6. **QA.** Layout and interaction checks against the design ([`design-qa.md`](design-qa.md)).
 
 ## Run the prototype
+
+The easiest way is the live link: **https://coelhoxs.github.io/wimb/**. To run it locally instead:
+
 
 Requires [Node.js](https://nodejs.org/).
 
