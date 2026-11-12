@@ -1611,7 +1611,7 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
     const active=navEl.querySelector('button.on')||navEl.querySelector('button[data-nav-tab]');
     if(!active)return;
     const navBox=navEl.getBoundingClientRect(),buttonBox=active.getBoundingClientRect();
-    const targetX=buttonBox.left-navBox.left+buttonBox.width/2;
+    const targetX=(buttonBox.left-navBox.left+buttonBox.width/2)*(navBox.width?navEl.offsetWidth/navBox.width:1);
     const pendingX=window.wimbNavPendingX;
     if(typeof pendingX==='number'&&!navEl.dataset.motionStarted){
       navEl.dataset.motionStarted='true';
@@ -1643,7 +1643,7 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
     if(reduce){S.activeTab=tabId;go(route);return;}
     const indicator=navEl.querySelector('.nav-active-indicator');
     const navBox=navEl.getBoundingClientRect();
-    const currentX=indicator?indicator.getBoundingClientRect().left-navBox.left+indicator.getBoundingClientRect().width/2:parseFloat(getComputedStyle(navEl).getPropertyValue('--nav-active-x'));
+    const currentX=indicator&&navBox.width?(indicator.getBoundingClientRect().left-navBox.left+indicator.getBoundingClientRect().width/2)*(navEl.offsetWidth/navBox.width):parseFloat(getComputedStyle(navEl).getPropertyValue('--nav-active-x'));
     window.wimbNavPendingX=currentX;
     S.activeTab=tabId;
     go(route);
@@ -2366,7 +2366,8 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
       if(!active)return;
       const navBox=navEl.getBoundingClientRect(),b=active.getBoundingClientRect();
       if(!navBox.width)return;
-      const targetX=b.left-navBox.left+b.width/2;
+      const k=navEl.offsetWidth/navBox.width||1;
+      const targetX=(b.left-navBox.left+b.width/2)*k;
       navEl.dataset.motionStarted='true';
       window.wimbNavPendingX=null;
       window.wimbNavLastX=targetX;
@@ -2487,4 +2488,10 @@ const originalRender=render;render=function(){if(S.screen!=='home')return origin
     if(window.visualViewport)visualViewport.addEventListener('resize',fit);
   })();
 </script>
+<style>
+/* iPhone fix: the app is scaled to fit, and Safari misplaces sticky elements inside a scaled frame.
+   Keep action buttons and tabs in normal flow so they always sit at the bottom / top of their screen. */
+.reset-screen>.flow-actions,.reset-ready>.flow-actions,.journal-photo-screen>.flow-actions,.reset-screen.reset-instructions>.flow-actions{position:relative!important;bottom:auto!important;top:auto!important;margin-top:auto!important}
+.app .tabs{position:relative!important;top:auto!important}
+</style>
 </body></html>
